@@ -18,10 +18,31 @@ sequenceDiagram
     server-->>browser: the JavaScript file;
     deactivate server;
 
-    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+    browser->>browser: Fill in note and click "Submit"
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json;
-    activate server;
-    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ];
-    deactivate server;
+    browser->>server: POST /submit-note
+    activate server
+    server->>database: Insert note into database
+    activate database
+    database-->>server: Note saved
+    deactivate database
+    server-->>browser: Redirect to /index.html
+    deactivate server
+
+    browser->>server: GET /index.html
+    activate server
+    server-->>browser: HTML page (refreshed)
+    deactivate server
+
+    browser->>server: GET /notes
+    activate server
+    server->>database: Retrieve notes from database
+    activate database
+    database-->>server: List of notes
+    deactivate database
+    server-->>browser: JSON response with notes
+    deactivate server
+
+    browser->>browser: Display notes on the HTML page
+
 ```
