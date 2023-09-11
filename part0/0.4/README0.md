@@ -18,7 +18,7 @@ sequenceDiagram
     server-->>browser: the JavaScript file;
     deactivate server;
 
-    browser->>browser: Fill in note and click "Submit"
+    browser->>browser: Create a new note and click "Submit"
 
     browser->>server: POST /submit-note
     activate server
@@ -44,5 +44,4 @@ sequenceDiagram
     deactivate server
 
     browser->>browser: Display notes on the HTML page
-
 ```
