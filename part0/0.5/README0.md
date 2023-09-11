@@ -1,39 +1,36 @@
 ```mermaid
-sequenceDiagram
-    participant browser
+  participant browser
     participant server
-    participant database
+    participant backend
 
-    browser->>server: SPA Initialization
-    activate server
-    server-->>browser: Initial HTML, JS, CSS
-    deactivate server
+    Note right of browser: User lands on the SPA's index page
 
-    Note right of browser: User interacts with SPA
-    browser->>browser: Fill in note and click "Submit"
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes;
+    activate server;
+    server-->>browser: Initial HTML document;
+    deactivate server;
 
-    browser->>server: POST /submit-note (AJAX)
-    activate server
-    server->>database: Insert note into database
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css;
+    activate server;
+    server-->>browser: the CSS file;
+    deactivate server;
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js;
+    activate server;
+    server-->>browser: the JavaScript file;
+    deactivate server;
+
+    Note right of browser: The SPA is loaded and initialized
+
+    browser->>backend: GET /api/notes (AJAX)
+    activate backend
+    backend->>database: Retrieve notes from database
     activate database
-    database-->>server: Note saved
+    database-->>backend: List of notes
     deactivate database
-    server-->>browser: Response: Note saved
-    deactivate server
+    backend-->>browser: JSON response with notes
+    deactivate backend
 
-    browser->>browser: Update UI with new note
-
-    Note right of browser: User continues interaction
-
-    browser->>server: GET /notes (AJAX)
-    activate server
-    server->>database: Retrieve notes from database
-    activate database
-    database-->>server: List of notes
-    deactivate database
-    server-->>browser: JSON response with notes
-    deactivate server
-
-    browser->>browser: Update UI with retrieved notes
+    Note right of browser: The SPA updates the current view with new notes
 
 ```
