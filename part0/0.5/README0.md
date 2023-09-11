@@ -2,7 +2,6 @@
 sequenceDiagram
     participant browser
     participant server
-    participant backend
 
     Note right of browser: User lands on the SPA's index page
 
@@ -23,15 +22,14 @@ sequenceDiagram
 
     Note right of browser: The SPA is loaded and initialized
 
-    browser->>backend: GET /api/notes (AJAX)
-    activate backend
-    backend->>database: Retrieve notes from database
+    browser->>server: GET /api/notes (AJAX)
+    activate server;
+    server->>database: Retrieve notes from database
     activate database
-    database-->>backend: List of notes
-    deactivate database
-    backend-->>browser: JSON response with notes
-    deactivate backend
-
+    database-->>server: List of notes
+    deactivate server
+    server-->>browser: JSON response with notes
+    
     Note right of browser: The SPA updates the current view with new notes
 
 ```
