@@ -1,5 +1,6 @@
 ```mermaid
-  participant browser
+sequenceDiagram
+    participant browser
     participant server
     participant backend
 
